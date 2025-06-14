@@ -1,0 +1,9 @@
+# how to make this work
+
+[UndertaleModTool/**/*]
+generated_files = true
+dotnet_analyzer_diagnostic.severity = none
+
+[Underanalyzer/**/*]
+generated_files = true
+dotnet_analyzer_diagnostic.severity = none

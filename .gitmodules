@@ -1,0 +1,6 @@
+[submodule "UndertaleModTool"]
+	path = UndertaleModTool
+	url = https://github.com/UnderminersTeam/UndertaleModTool.git
+[submodule "Underanalyzer"]
+	path = Underanalyzer
+	url = https://github.com/UnderminersTeam/Underanalyzer.git

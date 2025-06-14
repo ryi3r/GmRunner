@@ -1,0 +1,56 @@
+using States.GameState;
+using Underanalyzer.Decompiler.AST;
+
+namespace BytecodeVM;
+
+public class ASTRunner
+{
+    public static VMError? Run(IStatementNode node, GameState state, FunctionStack stack, out dynamic? value)
+    {
+        value = null;
+        switch (node)
+        {
+            case BlockNode bNode:
+                {
+                    var sTrace = new FunctionBacktrace() { Name = bNode.FragmentContext.CodeEntryName ?? "<null>" };
+                    stack.Stacktrace.Add(sTrace);
+                    foreach (var cNode in bNode.Children)
+                    {
+                        var nsTrace = new FunctionBacktrace() { Name = "<null>" };
+                        if (cNode is BlockNode cbNode)
+                            nsTrace.Name = cbNode.FragmentContext.CodeEntryName ?? "<null>";
+                        stack.Stacktrace.Add(nsTrace);
+                        var err = Run(cNode, state, stack, out _);
+                        if (err != null)
+                            return err;
+                        stack.Stacktrace.Remove(nsTrace);
+                    }
+                    stack.Stacktrace.Remove(sTrace);
+                }
+                break;
+            case FunctionDeclNode dNode:
+                {
+                    if (dNode.Name == null)
+                        return new(stack, VMErrorType.Runtime, "function name is null!?");
+                    if (stack.InstancesScope.Count != 0)
+                        Console.WriteLine("A");
+                    state.Functions.Add(dNode.Name, (stack, fnode, ins) =>
+                    {
+                        var sTrace = new FunctionBacktrace() { Name = dNode.FragmentContext.CodeEntryName ?? "<null>" };
+                        stack.Stacktrace.Add(sTrace);
+                        var err = Run(dNode.Body, state, stack, out var value);
+                        if (err == null)
+                            stack.Stacktrace.Remove(sTrace);
+                        return (err, value);
+                    });
+                }
+                break;
+            case EnumDeclNode eNode:
+                value = eNode.Enum;
+                break;
+            default:
+                return new(stack, VMErrorType.RunnerInternal, $"unknown node {node}");
+        }
+        return null;
+    }
+}
