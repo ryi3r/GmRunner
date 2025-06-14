@@ -282,7 +282,7 @@ class Runner
                 Raylib.BeginDrawing();
                 if (gState.Room?.DrawBackgroundColor ?? true)
                     Raylib.ClearBackground(new Color((byte)(data.Options.WindowColor & 0xff), (byte)((data.Options.WindowColor >> 8) & 0xff), (byte)((data.Options.WindowColor >> 16) & 0xff), (byte)((data.Options.WindowColor >> 24) & 0xff)));
-                //Raylib.BeginTextureMode(gState.RenderTexture!.Value);
+                Raylib.BeginTextureMode(gState.RenderTexture!.Value);
                 foreach (var subev in new EventSubtypeDraw[] { EventSubtypeDraw.PreDraw, EventSubtypeDraw.DrawBegin, EventSubtypeDraw.Draw, EventSubtypeDraw.DrawEnd, EventSubtypeDraw.DrawGUIBegin, EventSubtypeDraw.DrawGUI, EventSubtypeDraw.DrawGUIEnd, EventSubtypeDraw.PostDraw, EventSubtypeDraw.Resize })
                 {
                     foreach (var ins in lastInsts)
@@ -313,8 +313,8 @@ class Runner
                             gState.HandleError(ins.RunEvent(EventType.Draw, subev));
                     }
                 }
-                //Raylib.EndTextureMode();
-                //Raylib.DrawTexture(gState.RenderTexture!.Value.Texture, 0, 0, Color.White);
+                Raylib.EndTextureMode();
+                Raylib.DrawTexture(gState.RenderTexture!.Value.Texture, 0, 0, Color.White);
                 // debug
                 //Raylib.DrawFPS(5, 5);
                 Raylib.EndDrawing();
