@@ -1,5 +1,7 @@
 # GmRunner
 
+## Migrated to [Codeberg](https://codeberg.org/ryi3r/GmRunner)
+
 This is a GameMaker runner, it is meant to be an open-source runner with the ability to run various games.
 The project is still in early **WORK IN PROGRESS**, therefore it cannot run anything yet.
 
