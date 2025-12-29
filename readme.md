@@ -1,6 +1,6 @@
 # GmRunner
 
-## Migrated to [Codefloe](https://codefloe.com/ryi3r/GmRunner.git)
+## Migrated to [Self-Hosted Forgejo](https://git.crystal-server.co/ryi3r/GmRunner)
 
 This is a GameMaker runner, it is meant to be an open-source runner with the ability to run various games.
 The project is still in early **WORK IN PROGRESS**, therefore it cannot run anything yet.
